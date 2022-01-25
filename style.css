@@ -1,0 +1,26 @@
+body {
+    background-image: url("./assets/Title-BG.jpg");
+    background-size: 100vw 100vh;
+}
+
+#title-card {
+    margin-top: 25vh;
+    font-size: 40px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 50vh;
+    text-align: center;
+}
+
+#play-button{
+    margin-top: 5vh;
+    font-size: 40px;
+}
+
+h1 {
+    -webkit-text-stroke: 2.3px black;
+}
+
+h3 {
+    -webkit-text-stroke: 1.4px black;
+}
