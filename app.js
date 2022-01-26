@@ -2,6 +2,7 @@ let gameDiv = document.createElement("div")
 gameDiv.id = "game-div"
 let timerDiv = document.createElement("div")
 timerDiv.id = "timer-div"
+let totalTiles = 12
 
 function titleScreen(){
     document.body.style.backgroundImage = "url('./assets/Title-BG.jpg')"
@@ -23,6 +24,120 @@ async function mainGame(){
     document.body.append(timerDiv)
     await randomizeTiles()
     document.body.append(gameDiv)
+    await timer()
+    tileFlip()
+}
+
+async function randomizeTiles(){
+    await timeout(randomizeTime())
+    async function randomizerOne(){
+            for(let i = 0; i < gameTiles.length; i++){
+                let randomTileFront = document.createElement("img")
+                randomTileFront.className = `tile-${gameTiles[i]}`
+                randomTileFront.src = `./assets/E-Front-Tile-${gameTiles[i]}.png`
+                await timeout(randomizeTime())
+                gameDiv.append(randomTileFront)
+            }
+    }
+
+    async function randomizerTwo(){
+            for(let i = 0; i < gameTiles.length; i++){
+                let randomTileFront = document.createElement("img")
+                randomTileFront.className = `tile-${gameTiles[(gameTiles.length - 1) - i]}`
+                randomTileFront.src = `./assets/E-Front-Tile-${gameTiles[(gameTiles.length - 1) - i]}.png`
+                await timeout(randomizeTime())
+                gameDiv.append(randomTileFront)
+            }
+    }
+    return [await Promise.all([
+        randomizerOne(), 
+        randomizerTwo()
+    ])]
+}
+
+async function timer(){
+    let countdownTotal = 5
+    let gameTimeTotal = 30
+    async function countDown(){
+        for(let i = 7; i > 0; i--){
+            if(countdownTotal >= 0){
+                timerDiv.textContent = `GAME STARTING IN: ${countdownTotal}`
+                await timeout(1000)
+                countdownTotal--
+            } else{
+                timerDiv.textContent = `GAME START!!!`
+                await timeout(1000)
+            }
+        }
+    }
+
+    async function gameTimer(){
+        for (let i = 32; i > 0; i--){
+            if(totalTiles == 0){
+                timerDiv.textContent = "CONGRATS WOO!!"
+            } else if(gameTimeTotal >= 0){
+                timerDiv.textContent = `TIME REMAINING: ${gameTimeTotal}`
+                await timeout(1000)
+                gameTimeTotal--
+            } else{
+                timerDiv.textContent = `GAME OVER!`
+            }
+        }
+    }
+    return [await countDown(), gameTimer()]
+}
+
+function tileFlip(){
+    let allTiles = document.querySelectorAll("[class*=tile-]")
+    let activeTilesAmount = 0
+    let activeTilesList = []
+    allTiles.forEach(tile => {
+        tile.src = "./assets/E-Back-Tile.png"
+        tile.classList.add("back-tile")
+        tile.addEventListener("click", async function(e){
+            let tileSelect = e.target.classList
+            for(let i = 0; i < gameTiles.length; i++){
+                if(tileSelect.contains(`tile-${gameTiles[i]}`)){
+                    tile.src = `./assets/E-Front-Tile-${gameTiles[i]}.png`
+                    tile.classList.add("flipped")
+                    activeTilesAmount++
+                    activeTilesList.push(tile)
+                    await matchCheck()
+                }
+            }
+        })
+    })
+
+    async function matchCheck(){
+        if(activeTilesAmount == 2){
+            if(activeTilesList[0].src == activeTilesList[1].src){
+                await timeout(500)
+                await match()
+            } else {
+                await timeout(500)
+                await noMatch()
+            }
+        }
+    }
+
+    async function match(){
+        activeTilesList.forEach(tile => {
+            tile.src = "./assets/E-Blank-Tile.png"
+            tile.removeAttribute("class")
+        })
+        activeTilesAmount = 0
+        activeTilesList = []
+        totalTiles -= 2
+    }
+
+    async function noMatch(){
+        activeTilesList.forEach(tile => {
+            tile.src = "./assets/E-Back-Tile.png"
+            tile.classList.remove("flipped")
+        })
+        activeTilesAmount = 0
+        activeTilesList = []
+    }
 }
 
 function randomizeTime(){
@@ -34,80 +149,3 @@ function timeout(duration){
         setTimeout(resolve, duration)
     })
 }
-
-async function randomizeTiles(){
-    await timeout(randomizeTime())
-    async function randomizerOne(){
-            for(let i = 0; i < gameTiles.length; i++){
-                let randomTileFront = document.createElement("img")
-                randomTileFront.className = `tile-${gameTiles[i]}`
-                randomTileFront.src = `./assets/Front-Tile-${gameTiles[i]}.png`
-                await timeout(randomizeTime())
-                gameDiv.append(randomTileFront)
-            }
-    }
-
-    async function randomizerTwo(){
-            for(let i = 0; i < gameTiles.length; i++){
-                let randomTileFront = document.createElement("img")
-                randomTileFront.className = `tile-${gameTiles[(gameTiles.length - 1) - i]}`
-                randomTileFront.src = `./assets/Front-Tile-${gameTiles[(gameTiles.length - 1) - i]}.png`
-                await timeout(randomizeTime())
-                gameDiv.append(randomTileFront)
-            }
-    }
-
-    async function timer(){
-        let countdownTotal = 5
-        let gameTimeTotal = 30
-        async function countDown(){
-            for(let i = 7; i > 0; i--){
-                if(countdownTotal >= 0){
-                    timerDiv.textContent = `GAME STARTING IN: ${countdownTotal}`
-                    await timeout(1000)
-                    countdownTotal--
-                } else{
-                    timerDiv.textContent = `GAME START!!!`
-                    await timeout(1000)
-                }
-            }
-        }
-
-        function tileFlip(){
-            let allTiles = document.querySelectorAll("[class*=tile-]")
-            console.log(allTiles)
-            allTiles.forEach(tile => {
-            tile.src = "./assets/Back-Tile.png"
-            tile.classList.add("back-tile")
-            tile.addEventListener("click", function(e){
-                let tileSelect = e.target
-                if (tileSelect.classList.contains("tile-Apple")){
-                    console.log(`yes`)
-                } else{
-                    console.log(`no`)
-                }
-            })
-            })
-        }
-
-        async function gameTime(){
-            for (let i = 32; i > 0; i--){
-                if(gameTimeTotal >= 0){
-                    timerDiv.textContent = `TIME REMAINING: ${gameTimeTotal}`
-                    await timeout(1000)
-                    gameTimeTotal--
-                } else{
-                    timerDiv.textContent = `GAME OVER!`
-                }
-            }
-        }
-        return [await countDown(), tileFlip(), gameTime()]
-    }
-
-    return [await Promise.all([
-        randomizerOne(), 
-        randomizerTwo()
-    ]), timer()]
-
-}
-
