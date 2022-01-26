@@ -57,7 +57,7 @@ async function randomizeTiles(){
 
 async function timer(){
     let countdownTotal = 5
-    let gameTimeTotal = 30
+    let gameTimeTotal = 15
     async function countDown(){
         for(let i = 7; i > 0; i--){
             if(countdownTotal >= 0){
@@ -72,7 +72,7 @@ async function timer(){
     }
 
     async function gameTimer(){
-        for (let i = 32; i > 0; i--){
+        for (let i = 17; i > 0; i--){
             if(totalTiles == 0){
                 timerDiv.textContent = "CONGRATS WOO!!"
             } else if(gameTimeTotal >= 0){
@@ -81,6 +81,10 @@ async function timer(){
                 gameTimeTotal--
             } else{
                 timerDiv.textContent = `GAME OVER!`
+                let allTiles = document.querySelectorAll("[class*=tile-]")
+                allTiles.forEach(tile => {
+                    tile.removeAttribute("class")
+                })
             }
         }
     }
