@@ -3,7 +3,7 @@ body {
     background-size: 100vw 100vh;
 }
 
-#title-card, #game-end-div {
+#title-card, #game-difficulty-select, #game-end-div {
     margin-top: 25vh;
     font-size: 40px;
     color: white;
@@ -25,19 +25,19 @@ h3 {
     -webkit-text-stroke: 1.4px black;
 }
 
-#game-div {
+#game-divE {
     display: flex;
     flex-flow: row wrap;
     margin: 5.56vh 4vw 0vh 4.65vw;
 }
 
-#game-div img{
+#game-divE img{
     padding: 0.13vh 0.004vw;
     margin-bottom: 0.9vh;
     margin-right: 0.58vw;
 }
 
-#game-div img.back-tile:hover{
+#game-divE img.back-tile:hover{
     background-color: rgba(249, 253, 4, 0.4);
 }
 
@@ -48,7 +48,7 @@ h3 {
     color: white;
 }
 
-#playAgain-button, #mainMenu-button {
+#playAgain-button, #mainMenu-button, #easy-button, #medium-button, #hard-button {
     margin: 5vh;
     font-size: 40px;
 }
