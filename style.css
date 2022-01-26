@@ -12,7 +12,7 @@ body {
     text-align: center;
 }
 
-#play-button{
+#play-button {
     margin-top: 5vh;
     font-size: 40px;
 }
@@ -23,4 +23,26 @@ h1 {
 
 h3 {
     -webkit-text-stroke: 1.4px black;
+}
+
+#game-div {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 8.9vh 4vw 0vh 4.65vw;
+}
+
+#game-div img{
+    padding: 0.13vh 0.004vw;
+    margin-bottom: 0.9vh;
+    margin-right: 0.58vw;
+}
+
+#game-div img:hover{
+    background-color: rgba(249, 253, 4, 0.4);
+}
+
+#timer-div{
+    margin: 0 2.5vw;
+    font-size: 30px;
+    color: white;
 }

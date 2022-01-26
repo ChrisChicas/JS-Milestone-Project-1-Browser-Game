@@ -8,15 +8,29 @@ function titleScreen(){
     document.body.append(titleDiv)
 } //replicates initial title screen, which allows for later implemintation of main menu button
 
+let gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon"]
+
 function mainGame(){
     let titleCard = document.querySelector("#title-card")
     titleCard.remove()
     document.body.style.backgroundImage = "url('./assets/E-Game-BG.jpg')"
-    let test = document.createElement("button") //temp test button to go back to title screen
-    test.textContent = "test"
-    test.addEventListener("click", function(){
-        titleScreen()
-        test.remove()
-    })
-    document.body.append(test)
+    let gameDiv = document.createElement("div")
+    gameDiv.id = "game-div"
+    let timerDiv = document.createElement("div")
+    timerDiv.id = "timer-div"
+    timerDiv.textContent = "TIME REMAINING: 10"
+    for(let i = 0; i < 12; i++){
+        let tileBack = document.createElement("img")
+        tileBack.src = "./assets/Back-Tile.png"
+        tileBack.addEventListener("click", function() {
+            if(tileBack.getAttribute("src") == "./assets/Back-Tile.png"){
+                tileBack.src = "./assets/E-Front-Tile-Test.png"
+            } else {
+                tileBack.src = "./assets/Back-Tile.png"
+            }
+        })
+        gameDiv.append(tileBack)
+    }
+    
+    document.body.append(gameDiv, timerDiv)
 }
