@@ -28,7 +28,7 @@ h3 {
 #game-div {
     display: flex;
     flex-flow: row wrap;
-    margin: 8.9vh 4vw 0vh 4.65vw;
+    margin: 5.56vh 4vw 0vh 4.65vw;
 }
 
 #game-div img{
@@ -37,12 +37,12 @@ h3 {
     margin-right: 0.58vw;
 }
 
-#game-div img:hover{
+#game-div img.back-tile:hover{
     background-color: rgba(249, 253, 4, 0.4);
 }
 
 #timer-div{
-    margin: 0 2.5vw;
+    margin: -0.5vh 1.8vw;
     font-size: 30px;
     color: white;
 }
