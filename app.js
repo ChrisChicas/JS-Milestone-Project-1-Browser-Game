@@ -1,24 +1,36 @@
-let gameDiv = document.createElement("div")
-gameDiv.id = "game-div"
-let timerDiv = document.createElement("div")
-timerDiv.id = "timer-div"
-let totalTiles = 12
+let gameDiv
+let timerDiv
+let totalTiles
+let titleCard
+let mainGameDiv
+let mainTimerDiv
+let gameEndDiv
 
 function titleScreen(){
-    document.body.style.backgroundImage = "url('./assets/Title-BG.jpg')"
-    let titleDiv = document.createElement("div")
-    titleDiv.id = "title-card"
-    titleDiv.innerHTML = `<h1>Memory Tile Match!</h1>
-    <h3>A simple memory game by Christian Chicas</h3>
-    <button id="play-button" onclick="mainGame()">Play</button>`
-    document.body.append(titleDiv)
+    docSelectors()
+    if (titleCard == null){
+        mainTimerDiv.remove()
+        gameEndDiv.remove()
+        createMenuComponents()
+    }
 } //replicates initial title screen, which allows for later implemintation of main menu button
 
 let gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon"]
 
 async function mainGame(){
-    let titleCard = document.querySelector("#title-card")
-    titleCard.remove()
+    docSelectors()
+    if (titleCard != null){
+        titleCard.remove()
+    }
+
+    if (mainTimerDiv != null){
+        mainTimerDiv.remove()
+        gameEndDiv.remove()
+        createGameComponents()
+    } else {
+        createGameComponents()
+    }
+
     document.body.style.backgroundImage = "url('./assets/E-Game-BG.jpg')"
     timerDiv.textContent = "LOADING TILES..."
     document.body.append(timerDiv)
@@ -26,6 +38,30 @@ async function mainGame(){
     document.body.append(gameDiv)
     await timer()
     tileFlip()
+}
+
+function docSelectors(){
+    titleCard = document.querySelector("#title-card")
+    mainTimerDiv = document.querySelector("#timer-div")
+    gameEndDiv = document.querySelector("#game-end-div")
+}
+
+function createGameComponents(){
+    gameDiv = document.createElement("div")
+    gameDiv.id = "game-div"
+    timerDiv = document.createElement("div")
+    timerDiv.id = "timer-div"
+    totalTiles = 12
+}
+
+function createMenuComponents(){
+    document.body.style.backgroundImage = "url('./assets/Title-BG.jpg')"
+    let titleDiv = document.createElement("div")
+    titleDiv.id = "title-card"
+    titleDiv.innerHTML = `<h1>Memory Tile Match!</h1>
+    <h3>A simple memory game by Christian Chicas</h3>
+    <button id="play-button" onclick="mainGame()">Play</button>`
+    document.body.append(titleDiv)
 }
 
 async function randomizeTiles(){
@@ -72,9 +108,17 @@ async function timer(){
     }
 
     async function gameTimer(){
+        mainGameDiv = document.querySelector("#game-div")
+        gameEndDiv = document.createElement("div")
+        gameEndDiv.id = "game-end-div"
+        gameEndDiv.innerHTML = `<h1>Play Again?</h1>
+        <button id="playAgain-button" onclick="mainGame()">Play Again</button>
+        <button id="mainMenu-button" onclick="titleScreen()">Main Menu</button>`
         for (let i = 17; i > 0; i--){
             if(totalTiles == 0){
                 timerDiv.textContent = "CONGRATS WOO!!"
+                mainGameDiv.remove()
+                document.body.append(gameEndDiv)
             } else if(gameTimeTotal >= 0){
                 timerDiv.textContent = `TIME REMAINING: ${gameTimeTotal}`
                 await timeout(1000)
@@ -85,6 +129,8 @@ async function timer(){
                 allTiles.forEach(tile => {
                     tile.removeAttribute("class")
                 })
+                mainGameDiv.remove()
+                document.body.append(gameEndDiv)
             }
         }
     }
@@ -115,10 +161,10 @@ function tileFlip(){
     async function matchCheck(){
         if(activeTilesAmount == 2){
             if(activeTilesList[0].src == activeTilesList[1].src){
-                await timeout(500)
+                await timeout(350)
                 await match()
             } else {
-                await timeout(500)
+                await timeout(350)
                 await noMatch()
             }
         }
