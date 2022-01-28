@@ -4,12 +4,14 @@ let titleDiv
 let gameDifficultySelect
 let difficultySelectDiv
 let selectedDifficulty
+let gameTiles
+let countdownTotal
+let gameTimeTotal
 let totalTiles
 let titleCard
 let mainGameDiv
 let mainTimerDiv
 let gameEndDiv
-let gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon"]
 // global variables which are constantly being changed or invoked
 
 const uniFunctions = {
@@ -21,13 +23,40 @@ const uniFunctions = {
     }, //selects docs for functions which need them
 
     createEGameComponents(){
+        gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon"]
         selectedDifficulty = "E"
         gameDiv = document.createElement("div")
-        gameDiv.id = `game-div${selectedDifficulty}`
+        gameDiv.id = "game-divE"
         timerDiv = document.createElement("div")
         timerDiv.id = "timer-div"
         totalTiles = 12
+        countdownTotal = 5
+        gameTimeTotal = 15
     }, //creates components for the easy difficulty game
+
+    createMGameComponents(){
+        gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon", "Apple", "Apple", "Apple", "Apple"]
+        selectedDifficulty = "M"
+        gameDiv = document.createElement("div")
+        gameDiv.id = "game-divM"
+        timerDiv = document.createElement("div")
+        timerDiv.id = "timer-div"
+        totalTiles = 20
+        countdownTotal = 7
+        gameTimeTotal = 999
+    }, //creates components for the medium difficulty game
+
+    createHGameComponents(){
+        gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon", "Apple", "Apple", "Apple", "Apple", "Apple", "Apple", "Apple", "Apple", "Apple"]
+        selectedDifficulty = "H"
+        gameDiv = document.createElement("div")
+        gameDiv.id = "game-divH"
+        timerDiv = document.createElement("div")
+        timerDiv.id = "timer-div"
+        totalTiles = 30
+        countdownTotal = 10
+        gameTimeTotal = 999
+    }, //creates components for the hard difficulty game
 
     createMenuComponents(){
         document.body.style.backgroundImage = "url('./assets/Title-BG.jpg')"
@@ -77,8 +106,8 @@ function difficultySelectScreen(){
     difficultySelectDiv.id = "game-difficulty-select"
     difficultySelectDiv.innerHTML = `<h1>Select a difficulty!</h1>
     <button id="easy-button" onclick="mainGameE()">Easy</button>
-    <button id="medium-button" onclick="">Medium</button>
-    <button id="hard-button" onclick="">Hard</button>`
+    <button id="medium-button" onclick="mainGameM()">Medium</button>
+    <button id="hard-button" onclick="mainGameH()">Hard</button>`
     document.body.append(difficultySelectDiv)
 }
 
@@ -105,13 +134,59 @@ async function mainGameE(){
     tileFlip()
 }
 
+async function mainGameM(){
+    uniFunctions.docSelectors()
+    if (gameDifficultySelect != null){
+        gameDifficultySelect.remove()
+    }
+
+    if (mainTimerDiv != null){
+        mainTimerDiv.remove()
+        gameEndDiv.remove()
+        uniFunctions.createMGameComponents()
+    } else {
+        uniFunctions.createMGameComponents()
+    }
+
+    document.body.style.backgroundImage = "url('./assets/M-Game/M-Game-BG.jpg')"
+    timerDiv.textContent = "LOADING TILES..."
+    document.body.append(timerDiv)
+    await randomizeTiles()
+    document.body.append(gameDiv)
+    await timer()
+    tileFlip()
+}
+
+async function mainGameH(){
+    uniFunctions.docSelectors()
+    if (gameDifficultySelect != null){
+        gameDifficultySelect.remove()
+    }
+
+    if (mainTimerDiv != null){
+        mainTimerDiv.remove()
+        gameEndDiv.remove()
+        uniFunctions.createHGameComponents()
+    } else {
+        uniFunctions.createHGameComponents()
+    }
+
+    document.body.style.backgroundImage = "url('./assets/H-Game/H-Game-BG.jpg')"
+    timerDiv.textContent = "LOADING TILES..."
+    document.body.append(timerDiv)
+    await randomizeTiles()
+    document.body.append(gameDiv)
+    await timer()
+    tileFlip()
+}
+
 async function randomizeTiles(){
     await uniFunctions.timeout(uniFunctions.randomizeTime())
     async function randomizerOne(){
             for(let i = 0; i < gameTiles.length; i++){
                 let randomTileFront = document.createElement("img")
                 randomTileFront.className = `tile-${gameTiles[i]}`
-                randomTileFront.src = `./assets/E-Game/E-Front-Tile-${gameTiles[i]}.png`
+                randomTileFront.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Front-Tile-${gameTiles[i]}.png`
                 await uniFunctions.timeout(uniFunctions.randomizeTime())
                 gameDiv.append(randomTileFront)
             }
@@ -121,7 +196,7 @@ async function randomizeTiles(){
             for(let i = 0; i < gameTiles.length; i++){
                 let randomTileFront = document.createElement("img")
                 randomTileFront.className = `tile-${gameTiles[(gameTiles.length - 1) - i]}`
-                randomTileFront.src = `./assets/E-Game/E-Front-Tile-${gameTiles[(gameTiles.length - 1) - i]}.png`
+                randomTileFront.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Front-Tile-${gameTiles[(gameTiles.length - 1) - i]}.png`
                 await uniFunctions.timeout(uniFunctions.randomizeTime())
                 gameDiv.append(randomTileFront)
             }
@@ -133,10 +208,8 @@ async function randomizeTiles(){
 }
 
 async function timer(){
-    let countdownTotal = 5
-    let gameTimeTotal = 15
     async function countDown(){
-        for(let i = 7; i > 0; i--){
+        for(let i = (countdownTotal + 2); i > 0; i--){
             if(countdownTotal >= 0){
                 timerDiv.textContent = `GAME STARTING IN: ${countdownTotal}`
                 await uniFunctions.timeout(1000)
@@ -149,7 +222,7 @@ async function timer(){
     }
 
     async function gameTimer(){
-        for (let i = 17; i > 0; i--){
+        for (let i = (gameTimeTotal + 2); i > 0; i--){
             if (totalTiles == 0){
                 timerDiv.textContent = "CONGRATULATIONS! YOU WIN!"
                 uniFunctions.gameEndScreen()
@@ -172,13 +245,13 @@ function tileFlip(){
     let activeTilesAmount = 0
     let activeTilesList = []
     allTiles.forEach(tile => {
-        tile.src = "./assets/E-Game/E-Back-Tile.png"
+        tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Back-Tile.png`
         tile.classList.add("back-tile")
         tile.addEventListener("click", async function(e){
             let tileSelect = e.target.classList
             for(let i = 0; i < gameTiles.length; i++){
                 if(tileSelect.contains(`tile-${gameTiles[i]}`)){
-                    tile.src = `./assets/E-Game/E-Front-Tile-${gameTiles[i]}.png`
+                    tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Front-Tile-${gameTiles[i]}.png`
                     tile.classList.add("flipped")
                     activeTilesAmount++
                     activeTilesList.push(tile)
@@ -202,7 +275,7 @@ function tileFlip(){
     
     async function match(){
         activeTilesList.forEach(tile => {
-            tile.src = "./assets/E-Game/E-Blank-Tile.png"
+            tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Blank-Tile.png`
             tile.removeAttribute("class")
         })
         activeTilesAmount = 0
@@ -212,7 +285,7 @@ function tileFlip(){
     
     async function noMatch(){
         activeTilesList.forEach(tile => {
-            tile.src = "./assets/E-Game/E-Back-Tile.png"
+            tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Back-Tile.png`
             tile.classList.remove("flipped")
         })
         activeTilesAmount = 0

@@ -25,7 +25,7 @@ h3 {
     -webkit-text-stroke: 1.4px black;
 }
 
-#game-divE {
+#game-divE, #game-divM, #game-divH {
     display: flex;
     flex-flow: row wrap;
     margin: 5.56vh 4vw 0vh 4.65vw;
@@ -37,7 +37,20 @@ h3 {
     margin-right: 0.58vw;
 }
 
-#game-divE img.back-tile:hover{
+#game-divM img{
+    padding-top: 0.5vh;
+    padding-bottom: 0.55vh;
+    margin-bottom: 0.9vh;
+    margin-right: 0.54vw;
+}
+
+#game-divH img{
+    padding: 0.13vh 0.004vw;
+    margin-bottom: 0.9vh;
+    margin-right: 0.58vw;
+}
+
+#game-divE img.back-tile:hover, #game-divM img.back-tile:hover, #game-divH img.back-tile:hover{
     background-color: rgba(249, 253, 4, 0.4);
 }
 
