@@ -35,7 +35,7 @@ const uniFunctions = {
     }, //creates components for the easy difficulty game
 
     createMGameComponents(){
-        gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon", "Apple", "Apple", "Apple", "Apple"]
+        gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon", "Banana", "Pear", "Kiwi", "Strawberry"]
         selectedDifficulty = "M"
         gameDiv = document.createElement("div")
         gameDiv.id = "game-divM"
@@ -43,11 +43,11 @@ const uniFunctions = {
         timerDiv.id = "timer-div"
         totalTiles = 20
         countdownTotal = 7
-        gameTimeTotal = 999
+        gameTimeTotal = 25
     }, //creates components for the medium difficulty game
 
     createHGameComponents(){
-        gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon", "Apple", "Apple", "Apple", "Apple", "Apple", "Apple", "Apple", "Apple", "Apple"]
+        gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon", "Banana", "Pear", "Kiwi", "Strawberry", "Apple", "Apple", "Apple", "Apple", "Apple"]
         selectedDifficulty = "H"
         gameDiv = document.createElement("div")
         gameDiv.id = "game-divH"
