@@ -45,9 +45,9 @@ h3 {
 }
 
 #game-divH img{
-    padding: 0.13vh 0.004vw;
-    margin-bottom: 0.9vh;
-    margin-right: 0.58vw;
+    padding: 0.6vh 0.049vw 0.65vh;
+    margin-bottom: 1.1vh;
+    margin-right: 0.66vw;
 }
 
 #game-divE img.back-tile:hover, #game-divM img.back-tile:hover, #game-divH img.back-tile:hover{

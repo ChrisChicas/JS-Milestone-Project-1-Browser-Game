@@ -30,8 +30,8 @@ const uniFunctions = {
         timerDiv = document.createElement("div")
         timerDiv.id = "timer-div"
         totalTiles = 12
-        countdownTotal = 5
-        gameTimeTotal = 15
+        countdownTotal = 3
+        gameTimeTotal = 20
     }, //creates components for the easy difficulty game
 
     createMGameComponents(){
@@ -42,20 +42,20 @@ const uniFunctions = {
         timerDiv = document.createElement("div")
         timerDiv.id = "timer-div"
         totalTiles = 20
-        countdownTotal = 7
-        gameTimeTotal = 25
+        countdownTotal = 5
+        gameTimeTotal = 30
     }, //creates components for the medium difficulty game
 
     createHGameComponents(){
-        gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon", "Banana", "Pear", "Kiwi", "Strawberry", "Apple", "Apple", "Apple", "Apple", "Apple"]
+        gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon", "Banana", "Pear", "Kiwi", "Strawberry", "Blueberries", "Coconut", "Avocado", "Lime", "Peach"]
         selectedDifficulty = "H"
         gameDiv = document.createElement("div")
         gameDiv.id = "game-divH"
         timerDiv = document.createElement("div")
         timerDiv.id = "timer-div"
         totalTiles = 30
-        countdownTotal = 10
-        gameTimeTotal = 999
+        countdownTotal = 7
+        gameTimeTotal = 45
     }, //creates components for the hard difficulty game
 
     createMenuComponents(){
@@ -109,7 +109,7 @@ function difficultySelectScreen(){
     <button id="medium-button" onclick="mainGameM()">Medium</button>
     <button id="hard-button" onclick="mainGameH()">Hard</button>`
     document.body.append(difficultySelectDiv)
-}
+} //creates difficulty select screen
 
 async function mainGameE(){
     uniFunctions.docSelectors()
@@ -132,7 +132,7 @@ async function mainGameE(){
     document.body.append(gameDiv)
     await timer()
     tileFlip()
-}
+} //runs main code for the game's easy difficulty
 
 async function mainGameM(){
     uniFunctions.docSelectors()
@@ -155,7 +155,7 @@ async function mainGameM(){
     document.body.append(gameDiv)
     await timer()
     tileFlip()
-}
+} //runs main code for the game's medium difficulty
 
 async function mainGameH(){
     uniFunctions.docSelectors()
@@ -178,7 +178,7 @@ async function mainGameH(){
     document.body.append(gameDiv)
     await timer()
     tileFlip()
-}
+} //runs main code for the game's hard difficulty
 
 async function randomizeTiles(){
     await uniFunctions.timeout(uniFunctions.randomizeTime())
@@ -205,7 +205,7 @@ async function randomizeTiles(){
         randomizerOne(), 
         randomizerTwo()
     ])]
-}
+} //appends tiles to the game board within random intervals
 
 async function timer(){
     async function countDown(){
@@ -238,7 +238,7 @@ async function timer(){
         }
     }
     return [await countDown(), gameTimer()]
-}
+} //countdown/timer & game status gets appended to the timer on the game board + runs end game code upon player win/loss
 
 function tileFlip(){
     let allTiles = document.querySelectorAll("[class*=tile-]")
@@ -291,4 +291,4 @@ function tileFlip(){
         activeTilesAmount = 0
         activeTilesList = []
     }
-}
+} //logic for tiles being clicked on game board + checking if two tiles clicked match or not
