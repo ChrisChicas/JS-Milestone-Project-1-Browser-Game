@@ -12,6 +12,13 @@ body {
     text-align: center;
 }
 
+#game-divE, #game-divM, #game-divH {
+    display: flex;
+    position: absolute;
+    flex-flow: row wrap;
+    margin: 5.56vh 4vw 0vh 4.65vw;
+}
+
 #play-button {
     margin-top: 5vh;
     font-size: 40px;
@@ -23,31 +30,6 @@ h1 {
 
 h3 {
     -webkit-text-stroke: 1.4px black;
-}
-
-#game-divE, #game-divM, #game-divH {
-    display: flex;
-    flex-flow: row wrap;
-    margin: 5.56vh 4vw 0vh 4.65vw;
-}
-
-#game-divE img{
-    padding: 0.13vh 0.004vw;
-    margin-bottom: 0.9vh;
-    margin-right: 0.58vw;
-}
-
-#game-divM img{
-    padding-top: 0.5vh;
-    padding-bottom: 0.55vh;
-    margin-bottom: 0.9vh;
-    margin-right: 0.54vw;
-}
-
-#game-divH img{
-    padding: 0.6vh 0.049vw 0.65vh;
-    margin-bottom: 1.1vh;
-    margin-right: 0.66vw;
 }
 
 #game-divE img.back-tile:hover, #game-divM img.back-tile:hover, #game-divH img.back-tile:hover{
@@ -64,4 +46,174 @@ h3 {
 #playAgain-button, #mainMenu-button, #easy-button, #medium-button, #hard-button {
     margin: 5vh;
     font-size: 40px;
+}
+
+@media (min-height: 939px) and (min-width: 1879px) {
+    #game-divE img{
+        padding: 0.15vh 0.48vw;
+        margin-bottom: 0.9vh;
+        margin-right: 0.58vw;
+        max-height: 26.5vh;
+    }
+    
+    #game-divM img{
+        padding-bottom: 0.05vh;
+        margin-bottom: 1.06vh;
+        margin-right: 0.55vw;
+    }
+    
+    #game-divH img{
+        padding: 0.35vh 0.06vw;
+        margin-bottom: 1.036vh;
+        margin-right: 0.636vw;
+    }
+}
+
+@media (min-height: 939px) and (min-width: 1920px) {
+    #game-divE img{
+        padding: 0.15vh 0.7vw;
+        margin-bottom: 0.9vh;
+        margin-right: 0.58vw;
+        max-height: 26.5vh;
+    }
+    
+    #game-divM img{
+        padding-right: 0.36vw;
+        padding-bottom: 0.05vh;
+        margin-bottom: 1.06vh;
+        margin-right: 0.56vw;
+    }
+    
+    #game-divH img{
+        padding: 0.35vh 0.24vw;
+        margin-bottom: 1.03vh;
+        margin-right: 0.57vw;
+    }
+}
+
+@media (min-height: 970px) and (min-width: 1879px) {
+    #game-divE img{
+        padding: 0.15vh 0.15vw;
+        margin-bottom: 0.97vh;
+        margin-right: 0.55vw;
+    }
+    
+    #game-divM img{
+        padding-bottom: 0.65vh;
+        margin-bottom: 1.14vh;
+        margin-right: 0.55vw;
+    }
+    
+    #game-divH img{
+        padding: 0.6vh 0.06vw 0.65vh;
+        margin-bottom: 1vh;
+        margin-right: 0.636vw;
+    }
+}
+
+@media (min-height: 970px) and (min-width: 1920px) {
+    #game-divE img{
+        padding: 0.15vh 0.35vw;
+        margin-bottom: 0.96vh;
+        margin-right: 0.6vw;
+        max-height: 26.5vh;
+    }
+    
+    #game-divM img{
+        padding-bottom: 0.65vh;
+        margin-bottom: 1.14vh;
+        margin-right: 0.56vw;
+    }
+    
+    #game-divH img{
+        padding: 0.6vh 0.2vw 0.65vh;
+        margin-bottom: 1vh;
+        margin-right: 0.66vw;
+    }
+}
+
+@media (min-height: 977px) and (min-width: 1879px) {
+    #game-divE img{
+        padding: 0.13vh 0.04vw;
+        margin-bottom: 1.07vh;
+        margin-right: 0.61vw;
+    }
+    
+    #game-divM img{
+        padding-bottom: 1vh;
+        margin-bottom: 0.9vh;
+        margin-right: 0.55vw;
+    }
+    
+    #game-divH img{
+        padding: 0.6vh 0.049vw 0.65vh;
+        margin-bottom: 1.1vh;
+        margin-right: 0.66vw;
+    }
+}
+
+@media (min-height: 977px) and (min-width: 1920px) {
+    #game-divE img{
+        padding: 0.13vh 0.3vw;
+        margin-bottom: 1.07vh;
+        margin-right: 0.55vw;
+    }
+    
+    #game-divM img{
+        padding-bottom: 1vh;
+        margin-bottom: 0.9vh;
+        margin-right: 0.57vw;
+    }
+    
+    #game-divH img{
+        padding: 0.6vh 0.2vw 0.65vh;
+        margin-bottom: 1.1vh;
+        margin-right: 0.66vw;
+    }
+}
+
+
+@media (min-height: 1008px) and (min-width: 1879px) {
+    #game-divE img{
+        padding: 0.52vh 0.004vw;
+        margin-top: 0.1vh;
+        margin-bottom: 0.9vh;
+        margin-right: 0.58vw;
+    }
+    
+    #game-divM img{
+        padding-bottom: 1.5vh;
+        margin-top: 0.2vh;
+        margin-bottom: 0.77vh;
+        margin-right: 0.55vw;
+    }
+    
+    #game-divH img{
+        padding: 0.9vh 0.055vw;
+        margin-top: 0.2vh;
+        margin-bottom: 0.77vh;
+        margin-right: 0.647vw;
+    }
+}
+
+@media (min-height: 1008px) and (min-width: 1920px) {
+    #game-divE img{
+        padding: 0.52vh 0.25vw;
+        margin-top: 0.1vh;
+        margin-bottom: 0.9vh;
+        margin-right: 0.56vw;
+    }
+    
+    #game-divM img{
+        padding-bottom: 1.5vh;
+        margin-top: 0.2vh;
+        margin-bottom: 0.77vh;
+        margin-right: 0.57vw;
+    }
+    
+    #game-divH img{
+        padding: 0.85vh 0.2vw;
+        margin-bottom: 0.89vh;
+        margin-right: 0.66vw;
+    }
 }
