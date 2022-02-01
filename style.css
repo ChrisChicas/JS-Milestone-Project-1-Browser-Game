@@ -19,8 +19,8 @@ body {
     margin: 5.56vh 4vw 0vh 4.65vw;
 }
 
-#play-button {
-    margin-top: 5vh;
+#play-button, #option-button, #howto-button {
+    margin: 2vh;
     font-size: 40px;
 }
 
@@ -28,7 +28,7 @@ h1 {
     -webkit-text-stroke: 2.3px black;
 }
 
-h3 {
+h3, h5 {
     -webkit-text-stroke: 1.4px black;
 }
 

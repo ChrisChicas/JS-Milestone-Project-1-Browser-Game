@@ -62,9 +62,13 @@ const uniFunctions = {
         document.body.style.backgroundImage = "url('./assets/Title-BG.jpg')"
         titleDiv = document.createElement("div")
         titleDiv.id = "title-card"
-        titleDiv.innerHTML = `<h1>Memory Tile Match!</h1>
-        <h3>A simple memory game by Christian Chicas</h3>
-        <button id="play-button" onclick="difficultySelectScreen()">Play</button>`
+        titleDiv.innerHTML = `<div id="title-card">
+        <h1>Tile Matcher!</h1>
+        <h3>A simple memory game!</h3>
+        <button id="play-button" onclick="difficultySelectScreen()">Play</button>
+        <button id="option-button" onclick="optionsMenu()">Options</button>
+        <button id="howto-button" onclick="howToMenu()">How To Play</button>
+        <h5>Created by: Christian Chicas</h5>`
         document.body.append(titleDiv)
     }, //creates components for the main menu
 
@@ -81,13 +85,13 @@ const uniFunctions = {
 
     randomizeTime(){
         return Math.floor(Math.random() * 500)
-    }, //generates a random number which between 0 and 500, used for timeout duration
+    }, //generates a random number which between 0 and 500, used for timeout duration, inspriation taken from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     
     timeout(duration){
         return new Promise(function(resolve){
             setTimeout(resolve, duration)
         })
-    } //sets timeout for set or random durations
+    } //this was a function used in one of out previous excersises which I thought would be useful in my code, it sets timeout for set or random durations
 } // universal functions used throughout this code
 
 function titleScreen(){
@@ -110,6 +114,14 @@ function difficultySelectScreen(){
     <button id="hard-button" onclick="mainGameH()">Hard</button>`
     document.body.append(difficultySelectDiv)
 } //creates difficulty select screen
+
+function optionsMenu(){
+    
+}
+
+function howToMenu(){
+
+}
 
 async function mainGameE(){
     uniFunctions.docSelectors()
