@@ -3,7 +3,7 @@ body {
     background-size: 100vw 100vh;
 }
 
-#title-card, #game-difficulty-select, #game-end-div {
+#title-card, #difficulty-div, #game-end-div, #options-div, #how-to-div {
     margin-top: 25vh;
     font-size: 40px;
     color: white;
@@ -19,7 +19,7 @@ body {
     margin: 5.56vh 4vw 0vh 4.65vw;
 }
 
-#play-button, #option-button, #howto-button {
+#play-button, #playAgain-button, #mainMenu-button, #option-button, #sound-button, #howto-button {
     margin: 2vh;
     font-size: 40px;
 }
@@ -28,8 +28,8 @@ h1 {
     -webkit-text-stroke: 2.3px black;
 }
 
-h3, h5 {
-    -webkit-text-stroke: 1.4px black;
+h3, h4 {
+    -webkit-text-stroke: 1px black;
 }
 
 #game-divE img.back-tile:hover, #game-divM img.back-tile:hover, #game-divH img.back-tile:hover{
@@ -43,7 +43,7 @@ h3, h5 {
     color: white;
 }
 
-#playAgain-button, #mainMenu-button, #easy-button, #medium-button, #hard-button {
+#easy-button, #medium-button, #hard-button {
     margin: 5vh;
     font-size: 40px;
 }

@@ -1,25 +1,27 @@
 let gameDiv
 let timerDiv
-let titleDiv
-let gameDifficultySelect
-let difficultySelectDiv
+let titleCard
+let difficultySelectCard
 let selectedDifficulty
+let optionsCard
+let soundStatus = "On"
+let howToCard
 let gameTiles
 let countdownTotal
 let gameTimeTotal
 let totalTiles
-let titleCard
-let mainGameDiv
-let mainTimerDiv
-let gameEndDiv
+let mainTimer
+let gameEndCard
 // global variables which are constantly being changed or invoked
 
 const uniFunctions = {
     docSelectors(){
         titleCard = document.querySelector("#title-card")
-        gameDifficultySelect = document.querySelector("#game-difficulty-select")
-        mainTimerDiv = document.querySelector("#timer-div")
-        gameEndDiv = document.querySelector("#game-end-div")
+        difficultySelectCard = document.querySelector("#difficulty-div")
+        mainTimer = document.querySelector("#timer-div")
+        gameEndCard = document.querySelector("#game-end-div")
+        optionsCard = document.querySelector("#options-div")
+        howToCard = document.querySelector("#how-to-div")
     }, //selects docs for functions which need them
 
     createEGameComponents(){
@@ -58,34 +60,19 @@ const uniFunctions = {
         gameTimeTotal = 45
     }, //creates components for the hard difficulty game
 
-    createMenuComponents(){
-        document.body.style.backgroundImage = "url('./assets/Title-BG.jpg')"
-        titleDiv = document.createElement("div")
-        titleDiv.id = "title-card"
-        titleDiv.innerHTML = `<div id="title-card">
-        <h1>Tile Matcher!</h1>
-        <h3>A simple memory game!</h3>
-        <button id="play-button" onclick="difficultySelectScreen()">Play</button>
-        <button id="option-button" onclick="optionsMenu()">Options</button>
-        <button id="howto-button" onclick="howToMenu()">How To Play</button>
-        <h5>Created by: Christian Chicas</h5>`
-        document.body.append(titleDiv)
-    }, //creates components for the main menu
-
-    gameEndScreen(){
-        mainGameDiv = document.querySelector(`#game-div${selectedDifficulty}`)
-        mainGameDiv.remove()
-        gameEndDiv = document.createElement("div")
-        gameEndDiv.id = "game-end-div"
-        gameEndDiv.innerHTML = `<h1>Play Again?</h1>
-        <button id="playAgain-button" onclick="mainGame${selectedDifficulty}()">Play Again</button>
-        <button id="mainMenu-button" onclick="titleScreen()">Main Menu</button>`
-        document.body.append(gameEndDiv)
-    }, //creates conditions for the end game screen to appear
+    async gameLogic(){
+        document.body.style.backgroundImage = `url('./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Game-BG.jpg')`
+        timerDiv.textContent = "LOADING TILES..."
+        document.body.append(timerDiv)
+        await randomizeTiles()
+        document.body.append(gameDiv)
+        await timer()
+        tileFlip()
+    }, //runs main game logic for any selected difficulty
 
     randomizeTime(){
         return Math.floor(Math.random() * 500)
-    }, //generates a random number which between 0 and 500, used for timeout duration, inspriation taken from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    }, //generates a random number which between 0 and 500, used for timeout duration, idea from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     
     timeout(duration){
         return new Promise(function(resolve){
@@ -96,18 +83,36 @@ const uniFunctions = {
 
 function titleScreen(){
     uniFunctions.docSelectors()
-    if (titleCard == null){
-        mainTimerDiv.remove()
-        gameEndDiv.remove()
-        uniFunctions.createMenuComponents()
+    if (optionsCard != null){
+        optionsCard.remove()
     }
-} //replicates initial title screen, which allows for addition of main menu button
+
+    if (howToCard != null){
+        howToCard.remove()
+    }
+
+    if (gameEndCard != null){
+        mainTimer.remove()
+        gameEndCard.remove()
+    }
+
+    document.body.style.backgroundImage = "url('./assets/Title-BG.jpg')"
+    let titleDiv = document.createElement("div")
+    titleDiv.id = "title-card"
+    titleDiv.innerHTML = `<h1>Tile Matcher!</h1>
+    <h3>A Simple Memory Game</h3>
+    <button id="play-button" onclick="difficultySelectScreen()">Play</button>
+    <button id="option-button" onclick="optionsScreen()">Options</button>
+    <button id="howto-button" onclick="howToScreen()">How To Play</button>
+    <h4>Created by: Christian Chicas</h4>`
+    document.body.append(titleDiv)
+} //replicates initial title screen exactly, which is useful when traversing back and forth from game menus
 
 function difficultySelectScreen(){
     uniFunctions.docSelectors()
     titleCard.remove()
-    difficultySelectDiv = document.createElement("div")
-    difficultySelectDiv.id = "game-difficulty-select"
+    let difficultySelectDiv = document.createElement("div")
+    difficultySelectDiv.id = "difficulty-div"
     difficultySelectDiv.innerHTML = `<h1>Select a difficulty!</h1>
     <button id="easy-button" onclick="mainGameE()">Easy</button>
     <button id="medium-button" onclick="mainGameM()">Medium</button>
@@ -115,81 +120,81 @@ function difficultySelectScreen(){
     document.body.append(difficultySelectDiv)
 } //creates difficulty select screen
 
-function optionsMenu(){
-    
-}
-
-function howToMenu(){
-
-}
-
-async function mainGameE(){
+function optionsScreen(){
     uniFunctions.docSelectors()
-    if (gameDifficultySelect != null){
-        gameDifficultySelect.remove()
-    }
+    titleCard.remove()
+    let optionsDiv = document.createElement("div")
+    optionsDiv.id = "options-div"
+    optionsDiv.innerHTML = `<h1>Options!</h1>
+    <button id="mainMenu-button" onclick="titleScreen()">Main Menu</button>
+    <button id="sound-button" onclick="soundControl()">Sound Effects: ${soundStatus}</button>`
+    document.body.append(optionsDiv)
+} //creates the options screen
 
-    if (mainTimerDiv != null){
-        mainTimerDiv.remove()
-        gameEndDiv.remove()
-        uniFunctions.createEGameComponents()
+function soundControl(){
+    let soundButton = document.querySelector("#sound-button")
+    if(soundStatus == "On"){
+        soundStatus = "Off"
+        soundButton.textContent = `Sound Effects: ${soundStatus}`
     } else {
-        uniFunctions.createEGameComponents()
+        soundStatus = "On"
+        soundButton.textContent = `Sound Effects: ${soundStatus}`
+    }
+} //toggles sound effects on and off
+
+function howToScreen(){
+    uniFunctions.docSelectors()
+    titleCard.remove()
+    let howToDiv = document.createElement("div")
+    howToDiv.id = "how-to-div"
+    howToDiv.innerHTML = `<h1>How To Play!</h1>
+    <h3>Before the game starts, the tiles will display their faces for a short while and then once the countdown hits zero, 
+    they will flip over and the game will begin. In order to win, you must memorize the tile faces and click on pairs until 
+    there are no pairs remaining! If the timer hits zero before all pairs are matched however, it will be game over, so watch out!</h3>
+    <button id="mainMenu-button" onclick="titleScreen()">Main Menu</button>`
+    document.body.append(howToDiv)
+} //creates the how to play screen
+
+function mainGameE(){
+    uniFunctions.docSelectors()
+    if (difficultySelectCard != null){
+        difficultySelectCard.remove()
     }
 
-    document.body.style.backgroundImage = "url('./assets/E-Game/E-Game-BG.jpg')"
-    timerDiv.textContent = "LOADING TILES..."
-    document.body.append(timerDiv)
-    await randomizeTiles()
-    document.body.append(gameDiv)
-    await timer()
-    tileFlip()
+    if (gameEndCard != null){
+        mainTimer.remove()
+        gameEndCard.remove()
+    }
+    uniFunctions.createEGameComponents()
+    uniFunctions.gameLogic()
 } //runs main code for the game's easy difficulty
 
-async function mainGameM(){
+function mainGameM(){
     uniFunctions.docSelectors()
-    if (gameDifficultySelect != null){
-        gameDifficultySelect.remove()
+    if (difficultySelectCard != null){
+        difficultySelectCard.remove()
     }
 
-    if (mainTimerDiv != null){
-        mainTimerDiv.remove()
-        gameEndDiv.remove()
-        uniFunctions.createMGameComponents()
-    } else {
-        uniFunctions.createMGameComponents()
+    if (gameEndCard != null){
+        mainTimer.remove()
+        gameEndCard.remove()
     }
-
-    document.body.style.backgroundImage = "url('./assets/M-Game/M-Game-BG.jpg')"
-    timerDiv.textContent = "LOADING TILES..."
-    document.body.append(timerDiv)
-    await randomizeTiles()
-    document.body.append(gameDiv)
-    await timer()
-    tileFlip()
+    uniFunctions.createMGameComponents()
+    uniFunctions.gameLogic()
 } //runs main code for the game's medium difficulty
 
-async function mainGameH(){
+function mainGameH(){
     uniFunctions.docSelectors()
-    if (gameDifficultySelect != null){
-        gameDifficultySelect.remove()
+    if (difficultySelectCard != null){
+        difficultySelectCard.remove()
     }
 
-    if (mainTimerDiv != null){
-        mainTimerDiv.remove()
-        gameEndDiv.remove()
-        uniFunctions.createHGameComponents()
-    } else {
-        uniFunctions.createHGameComponents()
+    if (gameEndCard != null){
+        mainTimer.remove()
+        gameEndCard.remove()
     }
-
-    document.body.style.backgroundImage = "url('./assets/H-Game/H-Game-BG.jpg')"
-    timerDiv.textContent = "LOADING TILES..."
-    document.body.append(timerDiv)
-    await randomizeTiles()
-    document.body.append(gameDiv)
-    await timer()
-    tileFlip()
+    uniFunctions.createHGameComponents()
+    uniFunctions.gameLogic()
 } //runs main code for the game's hard difficulty
 
 async function randomizeTiles(){
@@ -237,7 +242,7 @@ async function timer(){
         for (let i = (gameTimeTotal + 2); i > 0; i--){
             if (totalTiles == 0){
                 timerDiv.textContent = "CONGRATULATIONS! YOU WIN!"
-                uniFunctions.gameEndScreen()
+                gameEndScreen()
                 break
             } else if(gameTimeTotal >= 0){
                 timerDiv.textContent = `TIME REMAINING: ${gameTimeTotal}`
@@ -245,7 +250,7 @@ async function timer(){
                 gameTimeTotal--
             } else{
                 timerDiv.textContent = `GAME OVER! BETTER LUCK NEXT TIME!`
-                uniFunctions.gameEndScreen()
+                gameEndScreen()
             }
         }
     }
@@ -304,3 +309,14 @@ function tileFlip(){
         activeTilesList = []
     }
 } //logic for tiles being clicked on game board + checking if two tiles clicked match or not
+
+function gameEndScreen(){
+    let mainGameDiv = document.querySelector(`#game-div${selectedDifficulty}`)
+    mainGameDiv.remove()
+    let gameEndDiv = document.createElement("div")
+    gameEndDiv.id = "game-end-div"
+    gameEndDiv.innerHTML = `<h1>Play Again?</h1>
+    <button id="playAgain-button" onclick="mainGame${selectedDifficulty}()">Play Again</button>
+    <button id="mainMenu-button" onclick="titleScreen()">Main Menu</button>`
+    document.body.append(gameEndDiv)
+} //creates conditions for the end game screen to appear
