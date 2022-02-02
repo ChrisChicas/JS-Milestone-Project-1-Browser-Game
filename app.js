@@ -5,6 +5,7 @@ let difficultySelectCard
 let selectedDifficulty
 let optionsCard
 let soundStatus = "On"
+let audioType
 let howToCard
 let gameTiles
 let countdownTotal
@@ -72,7 +73,7 @@ const uniFunctions = {
 
     randomizeTime(){
         return Math.floor(Math.random() * 500)
-    }, //generates a random number which between 0 and 500, used for timeout duration, idea from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    }, //generates a random number which between 0 and 500, used for timeout duration; idea from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     
     timeout(duration){
         return new Promise(function(resolve){
@@ -82,6 +83,8 @@ const uniFunctions = {
 } // universal functions used throughout this code
 
 function titleScreen(){
+    audioType = "Button-Click"
+    soundCreate(audioType)
     uniFunctions.docSelectors()
     if (optionsCard != null){
         optionsCard.remove()
@@ -97,21 +100,23 @@ function titleScreen(){
     }
 
     document.body.style.backgroundImage = "url('./assets/Title-BG.jpg')"
-    let titleDiv = document.createElement("div")
+    let titleDiv = document.createElement("main")
     titleDiv.id = "title-card"
     titleDiv.innerHTML = `<h1>Tile Matcher!</h1>
     <h3>A Simple Memory Game</h3>
     <button id="play-button" onclick="difficultySelectScreen()">Play</button>
     <button id="option-button" onclick="optionsScreen()">Options</button>
     <button id="howto-button" onclick="howToScreen()">How To Play</button>
-    <h4>Created by: Christian Chicas</h4>`
+    <h4>Code and Assets Created By: Christian Chicas</h4>`
     document.body.append(titleDiv)
 } //replicates initial title screen exactly, which is useful when traversing back and forth from game menus
 
 function difficultySelectScreen(){
+    audioType = "Button-Click"
+    soundCreate(audioType)
     uniFunctions.docSelectors()
     titleCard.remove()
-    let difficultySelectDiv = document.createElement("div")
+    let difficultySelectDiv = document.createElement("section")
     difficultySelectDiv.id = "difficulty-div"
     difficultySelectDiv.innerHTML = `<h1>Select a difficulty!</h1>
     <button id="easy-button" onclick="mainGameE()">Easy</button>
@@ -121,9 +126,11 @@ function difficultySelectScreen(){
 } //creates difficulty select screen
 
 function optionsScreen(){
+    audioType = "Button-Click"
+    soundCreate(audioType)
     uniFunctions.docSelectors()
     titleCard.remove()
-    let optionsDiv = document.createElement("div")
+    let optionsDiv = document.createElement("section")
     optionsDiv.id = "options-div"
     optionsDiv.innerHTML = `<h1>Options!</h1>
     <button id="mainMenu-button" onclick="titleScreen()">Main Menu</button>
@@ -137,15 +144,28 @@ function soundControl(){
         soundStatus = "Off"
         soundButton.textContent = `Sound Effects: ${soundStatus}`
     } else {
+        audioType = "Button-Click"
         soundStatus = "On"
+        soundCreate(audioType)
         soundButton.textContent = `Sound Effects: ${soundStatus}`
     }
 } //toggles sound effects on and off
 
+function soundCreate(audioType){
+    let soundEffect = document.createElement("audio")
+    soundEffect.innerHTML = `<source src="./assets/Audio/${audioType}.wav" type="audio/wav">
+    Your browser does not support this audio!`
+    if (soundStatus == "On"){
+        soundEffect.play()
+    }
+} //creates and plays sound effects if toggled on
+
 function howToScreen(){
+    audioType = "Button-Click"
+    soundCreate(audioType)
     uniFunctions.docSelectors()
     titleCard.remove()
-    let howToDiv = document.createElement("div")
+    let howToDiv = document.createElement("section")
     howToDiv.id = "how-to-div"
     howToDiv.innerHTML = `<h1>How To Play!</h1>
     <h3>Before the game starts, the tiles will display their faces for a short while and then once the countdown hits zero, 
@@ -156,6 +176,8 @@ function howToScreen(){
 } //creates the how to play screen
 
 function mainGameE(){
+    audioType = "Button-Click"
+    soundCreate(audioType)
     uniFunctions.docSelectors()
     if (difficultySelectCard != null){
         difficultySelectCard.remove()
@@ -170,6 +192,8 @@ function mainGameE(){
 } //runs main code for the game's easy difficulty
 
 function mainGameM(){
+    audioType = "Button-Click"
+    soundCreate(audioType)
     uniFunctions.docSelectors()
     if (difficultySelectCard != null){
         difficultySelectCard.remove()
@@ -184,6 +208,8 @@ function mainGameM(){
 } //runs main code for the game's medium difficulty
 
 function mainGameH(){
+    audioType = "Button-Click"
+    soundCreate(audioType)
     uniFunctions.docSelectors()
     if (difficultySelectCard != null){
         difficultySelectCard.remove()
@@ -242,6 +268,9 @@ async function timer(){
         for (let i = (gameTimeTotal + 2); i > 0; i--){
             if (totalTiles == 0){
                 timerDiv.textContent = "CONGRATULATIONS! YOU WIN!"
+                await uniFunctions.timeout(100)
+                audioType = "Game-Win"
+                soundCreate(audioType)
                 gameEndScreen()
                 break
             } else if(gameTimeTotal >= 0){
@@ -250,6 +279,9 @@ async function timer(){
                 gameTimeTotal--
             } else{
                 timerDiv.textContent = `GAME OVER! BETTER LUCK NEXT TIME!`
+                await uniFunctions.timeout(100)
+                audioType = "Game-Lose"
+                soundCreate(audioType)
                 gameEndScreen()
             }
         }
@@ -268,8 +300,10 @@ function tileFlip(){
             let tileSelect = e.target.classList
             for(let i = 0; i < gameTiles.length; i++){
                 if(tileSelect.contains(`tile-${gameTiles[i]}`)){
+                    audioType = "Tile-Click"
+                    soundCreate(audioType)
                     tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Front-Tile-${gameTiles[i]}.png`
-                    tile.classList.add("flipped")
+                    tile.classList.remove("back-tile")
                     activeTilesAmount++
                     activeTilesList.push(tile)
                     await matchCheck()
@@ -295,6 +329,8 @@ function tileFlip(){
             tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Blank-Tile.png`
             tile.removeAttribute("class")
         })
+        audioType = "Tile-Match"
+        soundCreate(audioType)
         activeTilesAmount = 0
         activeTilesList = []
         totalTiles -= 2
@@ -303,8 +339,10 @@ function tileFlip(){
     async function noMatch(){
         activeTilesList.forEach(tile => {
             tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Back-Tile.png`
-            tile.classList.remove("flipped")
+            tile.classList.add("back-tile")
         })
+        audioType = "Tile-No-Match"
+        soundCreate(audioType)
         activeTilesAmount = 0
         activeTilesList = []
     }
@@ -313,7 +351,7 @@ function tileFlip(){
 function gameEndScreen(){
     let mainGameDiv = document.querySelector(`#game-div${selectedDifficulty}`)
     mainGameDiv.remove()
-    let gameEndDiv = document.createElement("div")
+    let gameEndDiv = document.createElement("section")
     gameEndDiv.id = "game-end-div"
     gameEndDiv.innerHTML = `<h1>Play Again?</h1>
     <button id="playAgain-button" onclick="mainGame${selectedDifficulty}()">Play Again</button>
