@@ -72,7 +72,6 @@ const uniFunctions = {
 
     async gameLogic(){
         document.body.style.backgroundImage = `url('./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Game-BG.jpg')`
-        timerDiv.textContent = "LOADING TILES..."
         document.body.append(timerDiv)
         await randomizeTiles()
         document.body.append(gameDiv)
@@ -170,9 +169,7 @@ function howToScreen(){
 } //creates the how to play screen
 
 function mainGameE(){
-    audioType = "Button-Click"
-    soundCreate(audioType)
-    uniFunctions.docSelectors()
+    uniFunctions.screenPrep()
     if (difficultySelectCard != null){
         difficultySelectCard.remove()
     }
@@ -186,9 +183,7 @@ function mainGameE(){
 } //runs main code for the game's easy difficulty
 
 function mainGameM(){
-    audioType = "Button-Click"
-    soundCreate(audioType)
-    uniFunctions.docSelectors()
+    uniFunctions.screenPrep()
     if (difficultySelectCard != null){
         difficultySelectCard.remove()
     }
@@ -202,9 +197,7 @@ function mainGameM(){
 } //runs main code for the game's medium difficulty
 
 function mainGameH(){
-    audioType = "Button-Click"
-    soundCreate(audioType)
-    uniFunctions.docSelectors()
+    uniFunctions.screenPrep()
     if (difficultySelectCard != null){
         difficultySelectCard.remove()
     }
@@ -233,7 +226,7 @@ async function randomizeTiles(){
         await randomizerOne(), 
         randomizerOne()
     ])]
-} //appends tiles to the game board within random intervals
+} //appends tiles to the game board with randomly sorted game tiles
 
 async function timer(){
     async function countDown(){
