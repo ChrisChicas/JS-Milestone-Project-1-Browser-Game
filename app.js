@@ -212,7 +212,7 @@ function mainGameH(){
 
 async function randomizeTiles(){
     async function randomizerOne(){
-        randomSet = gameTiles.sort((a, b) => Math.random() - 0.5) //idea from class & https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
+        randomSet = gameTiles.sort((a, b) => Math.random() - 0.5) //sorts array randomly, idea from class & https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
         console.log(randomSet)
             for(let i = 0; i < randomSet.length; i++){
                 let randomTileFront = document.createElement("img")
