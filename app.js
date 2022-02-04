@@ -25,6 +25,15 @@ const uniFunctions = {
         howToCard = document.querySelector("#how-to-div")
     }, //selects docs for functions which need them
 
+    screenPrep(){
+        audioType = "Button-Click"
+        soundCreate(audioType)
+        uniFunctions.docSelectors()
+        if (titleCard != null){
+            titleCard.remove()
+        }
+    }, //runs necessary code for most screens to display
+
     createEGameComponents(){
         gameTiles = ["Apple", "Cherries", "Grapes", "Lemon", "Orange", "Watermelon"]
         selectedDifficulty = "E"
@@ -71,10 +80,6 @@ const uniFunctions = {
         tileFlip()
     }, //runs main game logic for any selected difficulty
 
-    randomizeTime(){
-        return Math.floor(Math.random() * 500)
-    }, //generates a random number which between 0 and 500, used for timeout duration; idea from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-    
     timeout(duration){
         return new Promise(function(resolve){
             setTimeout(resolve, duration)
@@ -83,9 +88,7 @@ const uniFunctions = {
 } // universal functions used throughout this code
 
 function titleScreen(){
-    audioType = "Button-Click"
-    soundCreate(audioType)
-    uniFunctions.docSelectors()
+    uniFunctions.screenPrep()
     if (optionsCard != null){
         optionsCard.remove()
     }
@@ -112,10 +115,7 @@ function titleScreen(){
 } //replicates initial title screen exactly, which is useful when traversing back and forth from game menus
 
 function difficultySelectScreen(){
-    audioType = "Button-Click"
-    soundCreate(audioType)
-    uniFunctions.docSelectors()
-    titleCard.remove()
+    uniFunctions.screenPrep()
     let difficultySelectDiv = document.createElement("section")
     difficultySelectDiv.id = "difficulty-div"
     difficultySelectDiv.innerHTML = `<h1>Select a difficulty!</h1>
@@ -126,10 +126,7 @@ function difficultySelectScreen(){
 } //creates difficulty select screen
 
 function optionsScreen(){
-    audioType = "Button-Click"
-    soundCreate(audioType)
-    uniFunctions.docSelectors()
-    titleCard.remove()
+    uniFunctions.screenPrep()
     let optionsDiv = document.createElement("section")
     optionsDiv.id = "options-div"
     optionsDiv.innerHTML = `<h1>Options!</h1>
@@ -161,10 +158,7 @@ function soundCreate(audioType){
 } //creates and plays sound effects if toggled on
 
 function howToScreen(){
-    audioType = "Button-Click"
-    soundCreate(audioType)
-    uniFunctions.docSelectors()
-    titleCard.remove()
+    uniFunctions.screenPrep()
     let howToDiv = document.createElement("section")
     howToDiv.id = "how-to-div"
     howToDiv.innerHTML = `<h1>How To Play!</h1>
@@ -224,29 +218,20 @@ function mainGameH(){
 } //runs main code for the game's hard difficulty
 
 async function randomizeTiles(){
-    await uniFunctions.timeout(uniFunctions.randomizeTime())
     async function randomizerOne(){
-            for(let i = 0; i < gameTiles.length; i++){
+        randomSet = gameTiles.sort((a, b) => Math.random() - 0.5) //idea from class & https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
+        console.log(randomSet)
+            for(let i = 0; i < randomSet.length; i++){
                 let randomTileFront = document.createElement("img")
-                randomTileFront.className = `tile-${gameTiles[i]}`
-                randomTileFront.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Front-Tile-${gameTiles[i]}.png`
-                await uniFunctions.timeout(uniFunctions.randomizeTime())
+                randomTileFront.className = `tile-${randomSet[i]}`
+                randomTileFront.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Front-Tile-${randomSet[i]}.png`
                 gameDiv.append(randomTileFront)
             }
     }
 
-    async function randomizerTwo(){
-            for(let i = 0; i < gameTiles.length; i++){
-                let randomTileFront = document.createElement("img")
-                randomTileFront.className = `tile-${gameTiles[(gameTiles.length - 1) - i]}`
-                randomTileFront.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Front-Tile-${gameTiles[(gameTiles.length - 1) - i]}.png`
-                await uniFunctions.timeout(uniFunctions.randomizeTime())
-                gameDiv.append(randomTileFront)
-            }
-    }
     return [await Promise.all([
-        randomizerOne(), 
-        randomizerTwo()
+        await randomizerOne(), 
+        randomizerOne()
     ])]
 } //appends tiles to the game board within random intervals
 
