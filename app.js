@@ -83,7 +83,7 @@ const uniFunctions = {
         return new Promise(function(resolve){
             setTimeout(resolve, duration)
         })
-    } //this was a function used in one of out previous excersises which I thought would be useful in my code, it sets timeout for set or random durations
+    } //pauses code with a set duration by using setTimeout function wrapped in a promise allowing for simple async usage, idea was from a few of our previous JS course exercises
 } // universal functions used throughout this code
 
 function titleScreen(){
@@ -282,6 +282,7 @@ function tileFlip(){
                     soundCreate(audioType)
                     tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Front-Tile-${gameTiles[i]}.png`
                     tile.classList.remove("back-tile")
+                    tile.classList.add("flipped")
                     activeTilesAmount++
                     activeTilesList.push(tile)
                     await matchCheck()
@@ -292,6 +293,8 @@ function tileFlip(){
 
     async function matchCheck(){
         if(activeTilesAmount == 2){
+            let mainGameDiv = document.querySelector(`#game-div${selectedDifficulty}`)
+            mainGameDiv.style.pointerEvents = "none" //prevents clicks while checking for match to prevent bugs
             if(activeTilesList[0].src == activeTilesList[1].src){
                 await uniFunctions.timeout(350)
                 await match()
@@ -299,13 +302,14 @@ function tileFlip(){
                 await uniFunctions.timeout(350)
                 await noMatch()
             }
+            mainGameDiv.style.pointerEvents = "auto" //allows for click again after match check is finished
         }
     }
     
     async function match(){
         activeTilesList.forEach(tile => {
             tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Blank-Tile.png`
-            tile.removeAttribute("class")
+            tile.removeAttribute("class") //makes tiles blank png and removes class from tiles to remove event listener
         })
         audioType = "Tile-Match"
         soundCreate(audioType)
@@ -318,6 +322,7 @@ function tileFlip(){
         activeTilesList.forEach(tile => {
             tile.src = `./assets/${selectedDifficulty}-Game/${selectedDifficulty}-Back-Tile.png`
             tile.classList.add("back-tile")
+            tile.classList.remove("flipped")
         })
         audioType = "Tile-No-Match"
         soundCreate(audioType)
