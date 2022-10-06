@@ -1,45 +1,42 @@
 /* background image properites */
 body {
-    background-image: url("./assets/Title-BG.jpg");
-    background-size: 100vw 100vh;
+    background-image: url("./assets/BG.png");
 }
 
 /* menu cards alignment/properties */
 .container {
-    margin-top: 5vh;
+    margin: 1em auto;
     color: white;
     background-color: rgba(0, 0, 0, 0.4);
-    max-height: inherit;
     text-align: center;
+    max-height: 100vh;
 }
 
 /* main game board alignment/properties */
 #game-divE, #game-divM, #game-divH {
     display: flex;
-    position: absolute;
     flex-flow: row wrap;
-    margin: 5.56vh 4vw 0vh 4.65vw;
+    max-height: 100vh;
 }
 
 /* menu buttons alignment */
 #play-button, #playAgain-button, #mainMenu-button, #option-button, #sound-button, #howto-button {
-    margin: 2vh;
-    font-size: 40px;
+    margin: 1em;
 }
 
 /* adds outline to h1 */
 h1 {
-    -webkit-text-stroke: 2.3px black;
+    -webkit-text-stroke: 1.5px black;
 }
 
 /* adds outline to h3 */
 h3 {
-    -webkit-text-stroke: 1.7px black;
+    -webkit-text-stroke: 1.5px black;
 }
 
 /* adds outline to h4 */
 h4 {
-    -webkit-text-stroke: 1.5px black;
+    -webkit-text-stroke: 1px black;
 }
 
 /* highlights tile when hovering over a back tile */
@@ -52,15 +49,7 @@ img.flipped{
     pointer-events: none;
 }
 
-/* timer div alignment */
-#timer-div{
-    margin: -0.5vh 1.8vw;
-    font-size: 30px;
-    color: white;
-}
-
 /* difficulty select button alignments */
 #easy-button, #medium-button, #hard-button {
-    margin: 5vh;
-    font-size: 40px;
+    margin: 1em;
 }

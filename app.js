@@ -45,15 +45,14 @@ function titleScreen(){
         gameEndCard.remove()
     }
 
-    document.body.style.backgroundImage = "url('./assets/Title-BG.jpg')"
     let titleDiv = document.createElement("div")
     titleDiv.id = "title-card"
-    titleDiv.innerHTML = `<h1 class="display-1">Tile Matcher!</h1>
-        <h3 class="display-3">A Simple Memory Game</h3>
+    titleDiv.innerHTML = `<h1>TILE MATCHER!</h1>
+        <h3>A SIMPLE MEMORY GAME</h3>
         <button id="play-button" class="btn btn-light btn-outline-dark" onclick="difficultySelectScreen()">Play</button>
         <button id="option-button" class="btn btn-light btn-outline-dark" onclick="optionsScreen()">Options</button>
         <button id="howto-button" class="btn btn-light btn-outline-dark" onclick="howToScreen()">How To Play</button>
-        <h4 class="display-4">Code and Assets Created By: Christian Chicas</h4>`
+        <h4>CODE AND ASSETS CREATED BY: CHRISTIAN CHICAS</h4>`
     container.append(titleDiv)
 } //replicates initial title screen exactly, which is useful when traversing back and forth from game menus
 
@@ -62,7 +61,7 @@ function difficultySelectScreen(){
 
     let difficultySelectDiv = document.createElement("div")
     difficultySelectDiv.id = "difficulty-div"
-    difficultySelectDiv.innerHTML = `<h1 class="display-1">Select a difficulty!</h1>
+    difficultySelectDiv.innerHTML = `<h1>SELECT A DIFFICULTY:</h1>
     <button id="easy-button" class="btn btn-light btn-outline-dark" onclick="mainGame('E')">Easy</button>
     <button id="medium-button" class="btn btn-light btn-outline-dark" onclick="mainGame('M')">Medium</button>
     <button id="hard-button" class="btn btn-light btn-outline-dark" onclick="mainGame('H')">Hard</button>`
@@ -73,7 +72,7 @@ function optionsScreen(){
     uniFunctions.menuPrep()
     let optionsDiv = document.createElement("div")
     optionsDiv.id = "options-div"
-    optionsDiv.innerHTML = `<h1 class="display-1">Options!</h1>
+    optionsDiv.innerHTML = `<h1>OPTIONS:</h1>
     <button id="mainMenu-button" class="btn btn-light btn-outline-dark" onclick="titleScreen()">Main Menu</button>
     <button id="sound-button" class="btn btn-light btn-outline-dark" onclick="soundControl()">Sound Effects: ${soundStatus}</button>`
     container.append(optionsDiv)
@@ -97,11 +96,11 @@ function howToScreen(){
     
     let howToDiv = document.createElement("div")
     howToDiv.id = "how-to-div"
-    howToDiv.innerHTML = `<h1 class="display-1">How To Play!</h1>
-    <h4 class="display-4">Before the game starts, the tiles will display their faces for a short while and then once the countdown hits zero, 
+    howToDiv.innerHTML = `<h1>How To Play:</h1>
+    <h4>Before the game starts, the tiles will display their faces for a short while and then once the countdown hits zero, 
     they will flip over and the game will begin. In order to win, you must memorize the tile faces and click on pairs until 
-    there are no pairs remaining! If the timer hits zero before all pairs are matched however, it will be game over, so watch out!</h4>
-    <button id="mainMenu-button" class="btn btn-light btn-outline-dark" onclick="titleScreen()">Main Menu</button>`
+    there are no pairs remaining! If the timer hits zero before all pairs are matched however, it will be game over, so watch out!</h4>`.toUpperCase() + 
+    `<button id="mainMenu-button" class="btn btn-light btn-outline-dark" onclick="titleScreen()">Main Menu</button>`
     container.append(howToDiv)
 } //creates the how to play screen
 
@@ -110,7 +109,7 @@ function gameEndScreen(difficulty){
     gameDiv.remove()
     let gameEndDiv = document.createElement("div")
     gameEndDiv.id = "game-end-div"
-    gameEndDiv.innerHTML = `<h1 class="display-1">Play Again?</h1>
+    gameEndDiv.innerHTML = `<h1>PLAY AGAIN?</h1>
     <button id="playAgain-button" class="btn btn-light btn-outline-dark" onclick="mainGame('${difficulty}')">Play Again</button>
     <button id="mainMenu-button" class="btn btn-light btn-outline-dark" onclick="titleScreen()">Main Menu</button>`
     container.append(gameEndDiv)
@@ -153,9 +152,6 @@ async function mainGame(difficulty){
     gameDiv.id = `game-div${difficulty}`
     container.append(gameDiv)
     
-
-    document.body.style.backgroundImage = `url('./assets/${difficulty}-Game/${difficulty}-Game-BG.jpg')`
-
     await gameLogic(difficulty, gameTiles, countdownTotal, gameTimeTotal, totalTiles)
 } //runs main code for the game's easy difficulty
 
@@ -183,11 +179,11 @@ async function gameLogic(difficulty, gameTiles, countdownTotal, gameTimeTotal, t
         async function countDown(){
             for(let i = (countdownTotal + 2); i > 0; i--){
                 if(countdownTotal >= 0){
-                    timerDiv.textContent = `GAME STARTING IN: ${countdownTotal}`
+                    timerDiv.innerHTML = `<h1>GAME STARTING IN: ${countdownTotal}</h1>`
                     await uniFunctions.timeout(1000)
                     countdownTotal--
                 } else{
-                    timerDiv.textContent = "GAME START!!!"
+                    timerDiv.innerHTML = "<h1>GAME START!!!!</h1>"
                     await uniFunctions.timeout(1000)
                 }
             }
@@ -196,17 +192,17 @@ async function gameLogic(difficulty, gameTiles, countdownTotal, gameTimeTotal, t
         async function gameTimer(){
             for (let i = (gameTimeTotal + 2); i > 0; i--){
                 if (totalTiles == 0){
-                    timerDiv.textContent = "CONGRATULATIONS! YOU WIN!"
+                    timerDiv.innerHTML = "<h1>CONGRATULATIONS! YOU WIN!</h1>"
                     await uniFunctions.timeout(100)
                     uniFunctions.soundPlay("Game-Win")
                     gameEndScreen(difficulty)
                     break
                 } else if(gameTimeTotal >= 0){
-                    timerDiv.textContent = `TIME REMAINING: ${gameTimeTotal}`
+                    timerDiv.innerHTML = `<h1>TIME REMAINING: ${gameTimeTotal}</h1>`
                     await uniFunctions.timeout(1000)
                     gameTimeTotal--
                 } else{
-                    timerDiv.textContent = "GAME OVER! BETTER LUCK NEXT TIME!"
+                    timerDiv.innerHTML = "<h1>GAME OVER! BETTER LUCK NEXT TIME!</h1>"
                     await uniFunctions.timeout(100)
                     uniFunctions.soundPlay("Game-Lose")
                     gameEndScreen(difficulty)
