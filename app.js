@@ -160,7 +160,7 @@ async function gameLogic(difficulty, gameTiles, countdownTotal, gameTimeTotal, t
 
     async function randomizeTiles(){
         async function randomizer(){
-            randomSet = gameTiles.sort(() => Math.random() - 0.5) //sorts array randomly, idea from class & https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
+            randomSet = gameTiles.sort((a, b) => Math.random() - 0.5) //sorts array randomly, idea from class & https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
                 for(let i = 0; i < randomSet.length; i++){
                     let randomTileFront = document.createElement("img")
                     randomTileFront.className = `tile-${randomSet[i]}`

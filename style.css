@@ -3,25 +3,22 @@ body {
     background-image: url("./assets/BG.png");
 }
 
-/* menu cards alignment/properties */
+/* all button alignments */
+.btn {
+    margin: 1em;
+}
+
+/* container & tile alignment/properties */
 .container {
-    margin: 1em auto;
+    margin: 5vh auto;
     color: white;
     background-color: rgba(0, 0, 0, 0.4);
     text-align: center;
-    max-height: 100vh;
+    max-height: 90vh;
 }
 
-/* main game board alignment/properties */
-#game-divE, #game-divM, #game-divH {
-    display: flex;
-    flex-flow: row wrap;
-    max-height: 100vh;
-}
-
-/* menu buttons alignment */
-#play-button, #playAgain-button, #mainMenu-button, #option-button, #sound-button, #howto-button {
-    margin: 1em;
+.container img{
+    max-width: 20vw;
 }
 
 /* adds outline to h1 */
@@ -49,7 +46,3 @@ img.flipped{
     pointer-events: none;
 }
 
-/* difficulty select button alignments */
-#easy-button, #medium-button, #hard-button {
-    margin: 1em;
-}
