@@ -5,6 +5,8 @@
 
 ## Project Description
 
+Update (10/8/22): Changed overall game styling to allow tiles to fit most screens without needing to adjust + added Bootstrap. Refactored JS & added forfeit & main menu buttons + logic on certain screens.
+
 For this project, I wish to create a simple single-player memory matching game! My idea is that there will be different tiles or pieces on a board that will show for a few seconds before the game starts that the player will have to remember, and once that countdown goes down, the tiles will flip over and the player will attempt to flip over matching tile pairs before the timer runs out! Upon matching a tile pair, the tile pair should disappear until there are no tiles left or until the timer runs out as previously mentioned.
 ## Game Logic
 
