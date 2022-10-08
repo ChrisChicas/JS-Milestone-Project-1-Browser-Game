@@ -1,18 +1,25 @@
-/* background image properites */
+/* body/background properites */
 body {
     background-image: url("./assets/BG.png");
+    background-size: 100%;
+    font-family: cursive;
 }
 
-/* all button alignments */
-.btn {
-    margin: 1em;
+/* button properties */
+.btn{
+    color: white;
+    margin: 0.5em;
+}
+
+.btn:hover{
+    color: black;
 }
 
 /* container & tile alignment/properties */
 .container {
     margin: 5vh auto;
     color: white;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.8);
     text-align: center;
     max-height: 90vh;
 }
@@ -21,28 +28,12 @@ body {
     max-width: 20vw;
 }
 
-/* adds outline to h1 */
-h1 {
-    -webkit-text-stroke: 1.5px black;
-}
-
-/* adds outline to h3 */
-h3 {
-    -webkit-text-stroke: 1.5px black;
-}
-
-/* adds outline to h4 */
-h4 {
-    -webkit-text-stroke: 1px black;
-}
-
 /* highlights tile when hovering over a back tile */
 img.back-tile:hover{
-    background-color: rgba(249, 253, 4, 0.4);
+    background-color: rgba(249, 253, 4, 0.8);
 }
 
 /* removes click event for tiles that have been flipped to show faces to prevent bug, idea from instructor */
 img.flipped{
     pointer-events: none;
 }
-

@@ -1,5 +1,6 @@
 const container = document.querySelector(".container");
 let soundStatus = "On"
+let timerStatus = "Off"
 // global variables which are constantly being changed or invoked
 
 const uniFunctions = {
@@ -22,37 +23,42 @@ const uniFunctions = {
         return new Promise(function(resolve){
             setTimeout(resolve, duration)
         })
-    } //pauses code with a set duration by using setTimeout function wrapped in a promise allowing for simple async usage, idea was from a few of our previous JS course exercises
+
+    }, //pauses code with a set duration by using setTimeout function wrapped in a promise allowing for simple async usage, idea was from a few of our previous JS course exercises
 } // universal functions used throughout this code
 
-function titleScreen(){
+function titleScreen(difficulty = null){
     uniFunctions.soundPlay("Button-Click")
+
+    let difficultySelectCard = document.getElementById("difficulty-div")
+    let gameDiv = document.getElementById(`game-div${difficulty}`)
     let gameEndCard = document.getElementById("game-end-div")
     let mainTimer = document.getElementById("timer-div")
     let howToCard = document.getElementById("how-to-div")
     let optionsCard = document.getElementById("options-div")
     
-    if (optionsCard != null){
-        optionsCard.remove()
-    }
-
-    if (howToCard != null){
-        howToCard.remove()
-    }
-
-    if (gameEndCard != null){
+    if (difficulty != null){
+        timerStatus = "Off"
+        mainTimer.remove()
+        gameDiv.remove()
+    } else if (difficultySelectCard != null){
+        difficultySelectCard.remove()
+    } else if (gameEndCard != null){
         mainTimer.remove()
         gameEndCard.remove()
-    }
+    } else if (howToCard != null){
+        howToCard.remove()
+    } else if (optionsCard != null){
+        optionsCard.remove()
+    } 
 
     let titleDiv = document.createElement("div")
     titleDiv.id = "title-card"
     titleDiv.innerHTML = `<h1>TILE MATCHER!</h1>
         <h3>A SIMPLE MEMORY GAME</h3>
-        <button id="play-button" class="btn btn-light btn-outline-dark" onclick="difficultySelectScreen()">Play</button>
-        <button id="option-button" class="btn btn-light btn-outline-dark" onclick="optionsScreen()">Options</button>
-        <button id="howto-button" class="btn btn-light btn-outline-dark" onclick="howToScreen()">How To Play</button>
-        <h4>CODE AND ASSETS CREATED BY: CHRISTIAN CHICAS</h4>`
+        <button id="play-button" class="btn btn-success btn-lg" onclick="difficultySelectScreen()">Play</button>
+        <button id="option-button" class="btn btn-secondary btn-lg" onclick="optionsScreen()">Options</button>
+        <button id="howto-button" class="btn btn-primary btn-lg" onclick="howToScreen()">How To Play</button>`
     container.append(titleDiv)
 } //replicates initial title screen exactly, which is useful when traversing back and forth from game menus
 
@@ -62,9 +68,10 @@ function difficultySelectScreen(){
     let difficultySelectDiv = document.createElement("div")
     difficultySelectDiv.id = "difficulty-div"
     difficultySelectDiv.innerHTML = `<h1>SELECT A DIFFICULTY:</h1>
-    <button id="easy-button" class="btn btn-light btn-outline-dark" onclick="mainGame('E')">Easy</button>
-    <button id="medium-button" class="btn btn-light btn-outline-dark" onclick="mainGame('M')">Medium</button>
-    <button id="hard-button" class="btn btn-light btn-outline-dark" onclick="mainGame('H')">Hard</button>`
+    <button id="easy-button" class="btn btn-info btn-lg" onclick="mainGame('E')">Easy</button>
+    <button id="medium-button" class="btn btn-warning btn-lg" onclick="mainGame('M')">Medium</button>
+    <button id="hard-button" class="btn btn-danger btn-lg" onclick="mainGame('H')">Hard</button>
+    <div><button class="btn btn-primary btn-lg" onClick="titleScreen()">Main Menu</div>`
     container.append(difficultySelectDiv)
 } //creates difficulty select screen
 
@@ -73,8 +80,8 @@ function optionsScreen(){
     let optionsDiv = document.createElement("div")
     optionsDiv.id = "options-div"
     optionsDiv.innerHTML = `<h1>OPTIONS:</h1>
-    <button id="mainMenu-button" class="btn btn-light btn-outline-dark" onclick="titleScreen()">Main Menu</button>
-    <button id="sound-button" class="btn btn-light btn-outline-dark" onclick="soundControl()">Sound Effects: ${soundStatus}</button>`
+    <button id="mainMenu-button" class="btn btn-primary btn-lg" onclick="titleScreen()">Main Menu</button>
+    <button id="sound-button" class="btn btn-warning btn-lg" onclick="soundControl()">Sound Effects: ${soundStatus}</button>`
     container.append(optionsDiv)
 } //creates the options screen
 
@@ -97,21 +104,27 @@ function howToScreen(){
     let howToDiv = document.createElement("div")
     howToDiv.id = "how-to-div"
     howToDiv.innerHTML = `<h1>How To Play:</h1>
-    <h4>Before the game starts, the tiles will display their faces for a short while and then once the countdown hits zero, 
-    they will flip over and the game will begin. In order to win, you must memorize the tile faces and click on pairs until 
-    there are no pairs remaining! If the timer hits zero before all pairs are matched however, it will be game over, so watch out!</h4>`.toUpperCase() + 
-    `<button id="mainMenu-button" class="btn btn-light btn-outline-dark" onclick="titleScreen()">Main Menu</button>`
+    <h4>Before the game starts, the tiles will display their faces for a short while. Once the countdown finishes, 
+    the tiles will flip over and the game will begin. In order to win, you must memorize the tile faces and click on pairs until 
+    there are no tiles remaining. However, if the timer hits zero before all pairs are matched, it will be game over, so watch out!</h4>`.toUpperCase() + 
+    `<button id="mainMenu-button" class="btn btn-primary btn-lg" onclick="titleScreen()">Main Menu</button>`
     container.append(howToDiv)
 } //creates the how to play screen
 
-function gameEndScreen(difficulty){
+function gameEndScreen(difficulty, forfeit = false){
+    if (forfeit != false){
+        timerStatus = "Off"
+        uniFunctions.soundPlay("Game-Lose")
+        let mainTimer = document.getElementById("timer-div")
+        mainTimer.innerHTML = "<h1>GAME OVER!</h1>"
+    }
+    
     let gameDiv = document.getElementById(`game-div${difficulty}`)
     gameDiv.remove()
     let gameEndDiv = document.createElement("div")
     gameEndDiv.id = "game-end-div"
-    gameEndDiv.innerHTML = `<h1>PLAY AGAIN?</h1>
-    <button id="playAgain-button" class="btn btn-light btn-outline-dark" onclick="mainGame('${difficulty}')">Play Again</button>
-    <button id="mainMenu-button" class="btn btn-light btn-outline-dark" onclick="titleScreen()">Main Menu</button>`
+    gameEndDiv.innerHTML = `<button id="playAgain-button" class="btn btn-success btn-lg" onclick="mainGame('${difficulty}')">Play Again</button>
+    <button id="mainMenu-button" class="btn btn-primary btn-lg" onclick="titleScreen()">Main Menu</button>`
     container.append(gameEndDiv)
 } //creates the end game screen to appear
 
@@ -175,15 +188,18 @@ async function gameLogic(difficulty, gameTiles, countdownTotal, gameTimeTotal, t
     } //appends tiles to the game board with randomly sorted game tiles
 
     async function timer(){
-        let timerDiv = document.getElementById("timer-div")   
+        let mainTimer = document.getElementById("timer-div")
+        timerStatus = "On"
         async function countDown(){
             for(let i = (countdownTotal + 2); i > 0; i--){
-                if(countdownTotal >= 0){
-                    timerDiv.innerHTML = `<h1>GAME STARTING IN: ${countdownTotal}</h1>`
+                if (timerStatus === "Off"){
+                    break
+                } else if(countdownTotal >= 0){
+                    mainTimer.innerHTML = `<h1>GAME STARTING IN: ${countdownTotal}</h1>`
                     await uniFunctions.timeout(1000)
                     countdownTotal--
                 } else{
-                    timerDiv.innerHTML = "<h1>GAME START!!!!</h1>"
+                    mainTimer.innerHTML = "<h1>GAME START!!!!</h1>"
                     await uniFunctions.timeout(1000)
                 }
             }
@@ -191,18 +207,20 @@ async function gameLogic(difficulty, gameTiles, countdownTotal, gameTimeTotal, t
 
         async function gameTimer(){
             for (let i = (gameTimeTotal + 2); i > 0; i--){
-                if (totalTiles == 0){
-                    timerDiv.innerHTML = "<h1>CONGRATULATIONS! YOU WIN!</h1>"
+                if (timerStatus === "Off"){
+                    break
+                } else if (totalTiles == 0){
+                    mainTimer.innerHTML = "<h1>CONGRATULATIONS! YOU WIN!</h1>"
                     await uniFunctions.timeout(100)
                     uniFunctions.soundPlay("Game-Win")
                     gameEndScreen(difficulty)
                     break
                 } else if(gameTimeTotal >= 0){
-                    timerDiv.innerHTML = `<h1>TIME REMAINING: ${gameTimeTotal}</h1>`
+                    mainTimer.innerHTML = `<h1>TIME REMAINING: ${gameTimeTotal}</h1>`
                     await uniFunctions.timeout(1000)
                     gameTimeTotal--
                 } else{
-                    timerDiv.innerHTML = "<h1>GAME OVER! BETTER LUCK NEXT TIME!</h1>"
+                    mainTimer.innerHTML = "<h1>GAME OVER! BETTER LUCK NEXT TIME!</h1>"
                     await uniFunctions.timeout(100)
                     uniFunctions.soundPlay("Game-Lose")
                     gameEndScreen(difficulty)
@@ -275,6 +293,12 @@ async function gameLogic(difficulty, gameTiles, countdownTotal, gameTimeTotal, t
     } //logic for tiles being clicked on game board + checking if two tiles clicked match or not
 
     await randomizeTiles()
+
+    let inGameButtons = document.createElement("div")
+    inGameButtons.innerHTML = `<button class="btn btn-primary btn-lg" onClick="titleScreen('${difficulty}')">Main Menu</button>
+    <button class="btn btn-danger btn-lg" onClick="gameEndScreen('${difficulty}', true)">Forfeit</button>`
+    gameDiv.append(inGameButtons)
+
     await timer()
     tileFlip()
 } //logic to ensure the game conditions are set and run properly
