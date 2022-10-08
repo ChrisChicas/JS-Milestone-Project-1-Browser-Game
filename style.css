@@ -1,40 +1,38 @@
 /* background image properites */
 body {
-    background-image: url("./assets/Title-BG.jpg");
-    background-size: 100vw 100vh;
+    background-image: url("./assets/BG.png");
 }
 
-/* menu cards alignment/properties */
-#title-card, #difficulty-div, #game-end-div, #options-div, #how-to-div {
-    margin-top: 25vh;
-    font-size: 40px;
+/* all button alignments */
+.btn {
+    margin: 1em;
+}
+
+/* container & tile alignment/properties */
+.container {
+    margin: 5vh auto;
     color: white;
     background-color: rgba(0, 0, 0, 0.4);
-    height: 50vh;
     text-align: center;
+    max-height: 90vh;
 }
 
-/* main game board alignment/properties */
-#game-divE, #game-divM, #game-divH {
-    display: flex;
-    position: absolute;
-    flex-flow: row wrap;
-    margin: 5.56vh 4vw 0vh 4.65vw;
-}
-
-/* menu buttons alignment */
-#play-button, #playAgain-button, #mainMenu-button, #option-button, #sound-button, #howto-button {
-    margin: 2vh;
-    font-size: 40px;
+.container img{
+    max-width: 20vw;
 }
 
 /* adds outline to h1 */
 h1 {
-    -webkit-text-stroke: 2.3px black;
+    -webkit-text-stroke: 1.5px black;
 }
 
-/* adds slight outline to h3 & h4 */
-h3, h4 {
+/* adds outline to h3 */
+h3 {
+    -webkit-text-stroke: 1.5px black;
+}
+
+/* adds outline to h4 */
+h4 {
     -webkit-text-stroke: 1px black;
 }
 
@@ -48,186 +46,3 @@ img.flipped{
     pointer-events: none;
 }
 
-/* timer div alignment */
-#timer-div{
-    margin: -0.5vh 1.8vw;
-    font-size: 30px;
-    color: white;
-}
-
-/* difficulty select button alignments */
-#easy-button, #medium-button, #hard-button {
-    margin: 5vh;
-    font-size: 40px;
-}
-
-/* tile alignments for game boards + potential fix for different browser sizes */
-@media (min-height: 939px) and (min-width: 1879px) {
-    #game-divE img{
-        padding: 0.15vh 0.48vw;
-        margin-bottom: 0.9vh;
-        margin-right: 0.58vw;
-        max-height: 26.5vh;
-    }
-    
-    #game-divM img{
-        padding-bottom: 0.05vh;
-        margin-bottom: 1.06vh;
-        margin-right: 0.55vw;
-    }
-    
-    #game-divH img{
-        padding: 0.35vh 0.06vw;
-        margin-bottom: 1.036vh;
-        margin-right: 0.636vw;
-    }
-}
-
-@media (min-height: 939px) and (min-width: 1920px) {
-    #game-divE img{
-        padding: 0.15vh 0.7vw;
-        margin-bottom: 0.9vh;
-        margin-right: 0.58vw;
-        max-height: 26.5vh;
-    }
-    
-    #game-divM img{
-        padding-right: 0.36vw;
-        padding-bottom: 0.05vh;
-        margin-bottom: 1.06vh;
-        margin-right: 0.56vw;
-    }
-    
-    #game-divH img{
-        padding: 0.35vh 0.24vw;
-        margin-bottom: 1.03vh;
-        margin-right: 0.57vw;
-    }
-}
-
-@media (min-height: 970px) and (min-width: 1879px) {
-    #game-divE img{
-        padding: 0.15vh 0.15vw;
-        margin-bottom: 0.97vh;
-        margin-right: 0.55vw;
-    }
-    
-    #game-divM img{
-        padding-bottom: 0.65vh;
-        margin-bottom: 1.14vh;
-        margin-right: 0.55vw;
-    }
-    
-    #game-divH img{
-        padding: 0.6vh 0.06vw 0.65vh;
-        margin-bottom: 1vh;
-        margin-right: 0.636vw;
-    }
-}
-
-@media (min-height: 970px) and (min-width: 1920px) {
-    #game-divE img{
-        padding: 0.15vh 0.35vw;
-        margin-bottom: 0.96vh;
-        margin-right: 0.6vw;
-        max-height: 26.5vh;
-    }
-    
-    #game-divM img{
-        padding-bottom: 0.65vh;
-        margin-bottom: 1.14vh;
-        margin-right: 0.56vw;
-    }
-    
-    #game-divH img{
-        padding: 0.6vh 0.2vw 0.65vh;
-        margin-bottom: 1vh;
-        margin-right: 0.66vw;
-    }
-}
-
-@media (min-height: 977px) and (min-width: 1879px) {
-    #game-divE img{
-        padding: 0.13vh 0.04vw;
-        margin-bottom: 1.07vh;
-        margin-right: 0.61vw;
-    }
-    
-    #game-divM img{
-        padding-bottom: 1vh;
-        margin-bottom: 0.9vh;
-        margin-right: 0.55vw;
-    }
-    
-    #game-divH img{
-        padding: 0.6vh 0.049vw 0.65vh;
-        margin-bottom: 1.1vh;
-        margin-right: 0.66vw;
-    }
-}
-
-@media (min-height: 977px) and (min-width: 1920px) {
-    #game-divE img{
-        padding: 0.13vh 0.3vw;
-        margin-bottom: 1.07vh;
-        margin-right: 0.55vw;
-    }
-    
-    #game-divM img{
-        padding-bottom: 1vh;
-        margin-bottom: 0.9vh;
-        margin-right: 0.57vw;
-    }
-    
-    #game-divH img{
-        padding: 0.6vh 0.2vw 0.65vh;
-        margin-bottom: 1.1vh;
-        margin-right: 0.66vw;
-    }
-}
-
-
-@media (min-height: 1008px) and (min-width: 1879px) {
-    #game-divE img{
-        padding: 0.52vh 0.004vw;
-        margin-top: 0.1vh;
-        margin-bottom: 0.9vh;
-        margin-right: 0.58vw;
-    }
-    
-    #game-divM img{
-        padding-bottom: 1.5vh;
-        margin-top: 0.2vh;
-        margin-bottom: 0.77vh;
-        margin-right: 0.55vw;
-    }
-    
-    #game-divH img{
-        padding: 0.9vh 0.055vw;
-        margin-top: 0.2vh;
-        margin-bottom: 0.77vh;
-        margin-right: 0.647vw;
-    }
-}
-
-@media (min-height: 1008px) and (min-width: 1920px) {
-    #game-divE img{
-        padding: 0.52vh 0.25vw;
-        margin-top: 0.1vh;
-        margin-bottom: 0.9vh;
-        margin-right: 0.56vw;
-    }
-    
-    #game-divM img{
-        padding-bottom: 1.5vh;
-        margin-top: 0.2vh;
-        margin-bottom: 0.77vh;
-        margin-right: 0.57vw;
-    }
-    
-    #game-divH img{
-        padding: 0.85vh 0.2vw;
-        margin-bottom: 0.89vh;
-        margin-right: 0.66vw;
-    }
-}
