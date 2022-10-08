@@ -1,6 +1,7 @@
-# JS-Milestone-Project-1-Browser-Game
-# NJIT-SD-03 Milestone Project: Planning
---------
+# NJIT-SD-03 Milestone Project 1: Tile Matcher Game
+
+## Game Deployment: 
+- Git Hub Pages: [Link](https://chrischicas.github.io/Tile-Matcher-Game/)
 
 ## Project Description
 
